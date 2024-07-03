@@ -11,5 +11,21 @@ config_version=5
 [application]
 
 config/name="Aquarium Simulation"
+run/main_scene="res://scenes/main_scene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/sprites/icon.svg"
+
+[display]
+
+window/size/viewport_height=656
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[global_group]
+
+boid=""
+blocks=""
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

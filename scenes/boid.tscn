@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://hcu6oaoa4khp"]
+
+[ext_resource type="Script" path="res://scenes/boid.gd" id="1_n3miv"]
+[ext_resource type="Texture2D" uid="uid://c2xvlto7aa8nm" path="res://assets/sprites/Boid.png" id="1_nid2j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xifu"]
+size = Vector2(16, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwufm"]
+size = Vector2(60, 47)
+
+[node name="Boid" type="Area2D" groups=["boid"]]
+script = ExtResource("1_n3miv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_nid2j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5xifu")
+
+[node name="Vision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+position = Vector2(14, 0)
+shape = SubResource("RectangleShape2D_lwufm")
+debug_color = Color(0, 0.636388, 0.405518, 0.42)
+
+[node name="RayFolder" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(44, -7)
+
+[node name="RayCast2D2" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(41, 7)
+
+[node name="RayCast2D3" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(15, 23)
+
+[node name="RayCast2D4" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(15, -23)
+
+[connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
+[connection signal="area_exited" from="Vision" to="." method="_on_vision_area_exited"]
