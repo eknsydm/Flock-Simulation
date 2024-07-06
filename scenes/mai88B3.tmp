@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=4 uid="uid://dwpn70q4kfk04"]
+[gd_scene load_steps=7 format=4 uid="uid://dwpn70q4kfk04"]
 
 [ext_resource type="Texture2D" uid="uid://dderardo26e8c" path="res://assets/sprites/icon.svg" id="1_3heu3"]
-[ext_resource type="Script" path="res://scenes/scene_manager.gd" id="1_pbvw6"]
 [ext_resource type="PackedScene" uid="uid://hcu6oaoa4khp" path="res://scenes/boid.tscn" id="2_lio02"]
 [ext_resource type="Script" path="res://scenes/boid_spawner.gd" id="3_gde18"]
 [ext_resource type="Script" path="res://scenes/debug_camera.gd" id="4_o17n2"]
@@ -20,7 +19,6 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8j06g")
 
 [node name="MainScene" type="Node2D"]
-script = ExtResource("1_pbvw6")
 
 [node name="TestTileMapLayer" type="TileMapLayer" parent="." groups=["blocks"]]
 visible = false
@@ -31,7 +29,6 @@ tile_set = SubResource("TileSet_hl283")
 script = ExtResource("3_gde18")
 
 [node name="Boid" parent="." instance=ExtResource("2_lio02")]
-visible = false
 position = Vector2(504, 411)
 rotation = 3.0397
 

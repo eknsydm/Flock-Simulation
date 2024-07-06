@@ -21,4 +21,4 @@ func spawn_boid():
 	boid.global_position = Vector2( 
 		(randf_range(0 + margin, screen_size.x - margin)),
 		(randf_range(0 + margin, screen_size.y - margin)))
-	print(boid.global_position)
+	#boid.global_position = Vector2(500,300)

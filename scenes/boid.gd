@@ -1,78 +1,62 @@
 class_name Boid
 extends Area2D
 
-@onready var ray_folder := $RayFolder.get_children()
-
-var boidsISee := []
-var vel := Vector2.ONE
-var speed := 7.0
-var screensize : Vector2
-var movv := 48 #-----------------------------------
+var velocity := Vector2.UP
+var acceleration := Vector2.ZERO
+var max_force := 0.3
+var max_speed := 1
+var boids : Array[Boid]
+var screensize
 
 func _ready() -> void:
+	velocity = velocity.rotated(PI * randi())
 	screensize = get_viewport_rect().size
-	randomize()
-	
+
 
 func _physics_process(delta: float) -> void:
-	boids()
-	check_collision()
-	vel = vel.normalized() * speed 
-	move()
-	rotation = lerp_angle(rotation, vel.angle_to_point(Vector2.ZERO),0.4)
+	position += velocity
+	velocity += acceleration
+	rotation = lerp_angle(rotation, Vector2.ZERO.angle_to_point(velocity), 0.8)
+	flock()
+	edges()
 
+func edges():
+	if global_position.x < 0:
+		global_position.x = screensize.x
+	if global_position.x > screensize.x:
+		global_position.x = 0
+	if global_position.y < 0:
+		global_position.y = screensize.y
+	if global_position.y > screensize.y:
+		global_position.y = 0
 
-func check_collision():
-	for ray:RayCast2D in ray_folder:
-		if ray.is_colliding():
-			if ray.get_collider().is_in_group("blocks"):
-				var magi := (100 / (ray.get_collision_point() - global_position).length_squared())
-				vel += (ray.target_position.rotated(rotation) * magi)
-		pass
+func align() -> Vector2:
+	var steering = Vector2.ZERO
+	for boid:Boid in boids:
+		steering += boid.velocity
+	
+	if boids.size() > 0:
+		steering /= boids.size()
+		steering -= velocity
+		if steering.length() != 0:
+			steering = Vector2(
+				steering.x * max_speed / steering.length(),
+				steering.y * max_speed / steering.length())
+		steering = steering.limit_length(max_force)
+	return steering
 
-
-func boids():
-	if boidsISee:
-		
-		var num_of_boids := boidsISee.size()
-		var avg_vel := Vector2.ZERO
-		var avg_pos := Vector2.ZERO
-		var steer_away := Vector2.ZERO
-		
-		for boid in boidsISee:
-			avg_vel += boid.vel
-			avg_pos += boid.position
-			steer_away -= (boid.global_position - global_position) * (movv / (global_position - boid.global_position).length())
-		
-		avg_vel /= num_of_boids
-		vel -= (avg_vel - vel) / 2
-		
-		avg_pos /= num_of_boids
-		vel -= (avg_pos - position)  #-----------------------------
-		
-		steer_away /= num_of_boids
-		vel -= (steer_away)
-func move():
-	global_position -= vel
-	#
-	#if global_position.x < 0:
-		#global_position.x = screensize.x
-	#if global_position.x > screensize.x:
-		#global_position.x = 0
-	#if global_position.y < 0:
-		#global_position.y = screensize.y
-	#if global_position.y > screensize.y:
-		#global_position.y = 0
+func flock():
+	var allignment = align()
+	acceleration = allignment
+	
+func _init() -> void:
+	pass
 
 
 func _on_vision_area_entered(area: Area2D) -> void:
-	if area != self and area.is_in_group("boid"):
-		boidsISee.append(area)
-
+	if area is Boid and area != self:
+		boids.append(area)
 
 func _on_vision_area_exited(area: Area2D) -> void:
-	boidsISee.erase(area)
-
-func _draw() -> void:
-	#draw_line(position,vel,Color.RED,2)
-	pass
+	if area is Boid:
+		boids.erase(area)
