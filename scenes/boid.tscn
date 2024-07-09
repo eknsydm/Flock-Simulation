@@ -11,23 +11,26 @@ size = Vector2(60, 47)
 
 [node name="Boid" type="Area2D" groups=["boid"]]
 script = ExtResource("1_n3miv")
-avoid_distance = 10.0
-view_distance = 100.0
+max_speed = 4.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_qhp8k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_5xifu")
 
 [node name="Vision" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+visible = false
 position = Vector2(14, 0)
 shape = SubResource("RectangleShape2D_lwufm")
 debug_color = Color(0, 0.636388, 0.405518, 0.42)
 
 [node name="RayFolder" type="Node2D" parent="."]
+visible = false
 
 [node name="RayCast2D" type="RayCast2D" parent="RayFolder"]
 target_position = Vector2(44, -7)

@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dderardo26e8c" path="res://assets/sprites/icon.svg" id="1_3heu3"]
 [ext_resource type="Script" path="res://scenes/scene_manager.gd" id="1_pbvw6"]
-[ext_resource type="PackedScene" uid="uid://hcu6oaoa4khp" path="res://scenes/boid.tscn" id="2_lio02"]
 [ext_resource type="Script" path="res://scenes/boid_spawner.gd" id="3_gde18"]
 [ext_resource type="Script" path="res://scenes/debug_camera.gd" id="4_o17n2"]
+[ext_resource type="PackedScene" uid="uid://b1dyhf16xkf5o" path="res://scenes/settings_menu.tscn" id="5_s8qd4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8j06g"]
 texture = ExtResource("1_3heu3")
@@ -31,12 +31,10 @@ tile_set = SubResource("TileSet_hl283")
 script = ExtResource("3_gde18")
 num = 50
 
-[node name="Boid" parent="." instance=ExtResource("2_lio02")]
-visible = false
-position = Vector2(504, 411)
-rotation = 3.0397
-
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false
 position = Vector2(572, 333)
 script = ExtResource("4_o17n2")
+
+[node name="SettingsMenu" parent="." instance=ExtResource("5_s8qd4")]
+visible = false
