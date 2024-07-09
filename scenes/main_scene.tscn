@@ -29,6 +29,7 @@ tile_set = SubResource("TileSet_hl283")
 
 [node name="BoidSpawner" type="Node2D" parent="."]
 script = ExtResource("3_gde18")
+num = 50
 
 [node name="Boid" parent="." instance=ExtResource("2_lio02")]
 visible = false
