@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BoidSettings" load_steps=2 format=3 uid="uid://deu68j2udibjn"]
+
+[ext_resource type="Script" path="res://resources/boid_settings.gd" id="1_qwphc"]
+
+[resource]
+script = ExtResource("1_qwphc")
+cohesion_force = 0.05
+align_force = 0.05
+separation_force = 0.05
+wall_force = 0.1
+avoid_distance = 20.0
+view_distance = 50.0
+max_speed = 5.0
+min_speed = 1.0

@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxohcbghnw7jn"]
+
+[ext_resource type="Script" path="res://scenes/map_generator.gd" id="1_am3k3"]
+[ext_resource type="Texture2D" uid="uid://clka2kviby44r" path="res://assets/sprites/Tiles.png" id="1_hwisn"]
+[ext_resource type="Texture2D" uid="uid://dderardo26e8c" path="res://assets/sprites/icon.svg" id="1_pb1r4"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_georv"]
+texture = ExtResource("1_pb1r4")
+1:1/0 = 0
+1:1/0/modulate = Color(0, 0, 0, 1)
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t1ig7"]
+texture = ExtResource("1_hwisn")
+texture_region_size = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/modulate = Color(0, 0, 0, 1)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_8il6x"]
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_t1ig7")
+sources/0 = SubResource("TileSetAtlasSource_georv")
+
+[node name="MapGenerator" type="TileMapLayer"]
+tile_set = SubResource("TileSet_8il6x")
+script = ExtResource("1_am3k3")
+height = 160
+width = 288

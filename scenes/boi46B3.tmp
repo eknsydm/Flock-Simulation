@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://fij1l83iq4rt"]
+
+[ext_resource type="Script" path="res://scenes/boid_predator.gd" id="1_s6ntb"]
+[ext_resource type="Texture2D" uid="uid://c7iio107sdjqc" path="res://assets/sprites/Boid_test.png" id="3_xpvoi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tiphk"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mwghm"]
+radius = 204.061
+
+[sub_resource type="Curve" id="Curve_amqb5"]
+_data = [Vector2(0.0661765, 1), 0.0, 0.0, 0, 0, Vector2(0.987745, 0.428572), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Predator" type="Area2D" groups=["predator"]]
+script = ExtResource("1_s6ntb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("3_xpvoi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tiphk")
+
+[node name="Vision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_mwghm")
+debug_color = Color(0, 0.636388, 0.405518, 0.42)
+
+[node name="RayFolder" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(39, -4)
+
+[node name="RayCast2D2" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(26, 6)
+
+[node name="RayCast2D3" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(15, 18)
+
+[node name="RayCast2D4" type="RayCast2D" parent="RayFolder"]
+target_position = Vector2(15, -18)
+
+[node name="EatingTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+emitting = false
+amount = 50
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+scale_amount_min = 5.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_amqb5")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
+[connection signal="area_exited" from="Vision" to="." method="_on_vision_area_exited"]
+[connection signal="timeout" from="EatingTimer" to="." method="_on_eating_timer_timeout"]

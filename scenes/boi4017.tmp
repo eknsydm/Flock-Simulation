@@ -1,18 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://hcu6oaoa4khp"]
+[gd_scene load_steps=5 format=3 uid="uid://hcu6oaoa4khp"]
 
 [ext_resource type="Script" path="res://scenes/boid.gd" id="1_n3miv"]
-[ext_resource type="Resource" uid="uid://deu68j2udibjn" path="res://resources/boid_settings.tres" id="2_fcbgg"]
 [ext_resource type="Texture2D" uid="uid://c7iio107sdjqc" path="res://assets/sprites/Boid_test.png" id="2_qhp8k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tiphk"]
-radius = 5.0
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mwghm"]
-radius = 52.0384
+radius = 55.0364
 
 [node name="Boid" type="Area2D" groups=["boid"]]
 script = ExtResource("1_n3miv")
-settings = ExtResource("2_fcbgg")
+cohesion_force = null
+algin_force = null
+separation_force = null
+avoid_distance = null
+view_distance = null
+max_speed = 4.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_qhp8k")
@@ -29,18 +33,16 @@ debug_color = Color(0, 0.636388, 0.405518, 0.42)
 [node name="RayFolder" type="Node2D" parent="."]
 
 [node name="RayCast2D" type="RayCast2D" parent="RayFolder"]
-target_position = Vector2(43, -6)
+target_position = Vector2(44, -7)
 
 [node name="RayCast2D2" type="RayCast2D" parent="RayFolder"]
-target_position = Vector2(17, 6)
+target_position = Vector2(41, 7)
 
 [node name="RayCast2D3" type="RayCast2D" parent="RayFolder"]
-target_position = Vector2(22, 28)
+target_position = Vector2(15, 23)
 
 [node name="RayCast2D4" type="RayCast2D" parent="RayFolder"]
-target_position = Vector2(22, -28)
+target_position = Vector2(15, -23)
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
 [connection signal="area_exited" from="Vision" to="." method="_on_vision_area_exited"]
